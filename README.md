@@ -5,12 +5,24 @@
 
 **실차에서 불안정해진 차선 피팅을 카메라·LiDAR 기반 경로 생성으로 재설계하고, 데이터 구축부터 차량 제어까지 연결한 프로젝트입니다.**
 
-예선에서는 노란 중앙선에 2차곡선을 맞춰 주행했습니다. 본선 실차에서 점선이 일부만 검출되고 갈림길 정보가 사라지는 문제를 발견한 뒤, 노란선·흰선·LiDAR를 공통 BEV 좌표계에 결합했습니다. CNN은 전방 경로를 생성하고, 별도 제어 노드가 조향과 속도를 담당하도록 구성했습니다.
+예선에서는 기존 BEV에서 노란 중앙선에 2차곡선을 맞춰 주행했습니다. 본선 실차에서 점선이 일부만 검출되고 갈림길 정보가 사라지는 문제를 발견한 뒤, 기존 BEV의 차선 표현을 보완하고 노란선·흰선·LiDAR의 3채널 입력으로 CNN 경로 모델을 학습·배포했습니다. CNN은 전방 경로를 생성하고, 별도 제어 노드가 조향과 속도를 담당하도록 구성했습니다.
+
+## 본선 실차 주행
+
+**[본선 실차 주행 · 4:24:32–4:27:32](https://www.youtube.com/watch?v=CcfXS3UFL0A&t=15872s)**
+
+대회 중계에서 팀의 실차 주행 구간을 바로 볼 수 있습니다. [중계 원본과 예선 시뮬레이션](docs/demo.md)
+
+### 예선 시뮬레이션 주행
+
+[![국민대 예선 시뮬레이션 주행 영상](assets/simulation-preview.gif)](media/simulation.mp4)
+
+*노트북에서 실행한 시뮬레이터의 차량·경로 화면을 촬영한 약 3분 16초 영상입니다. 미리보기를 누르면 전체 영상 파일로 연결됩니다. 예선은 2차곡선 피팅·상태 머신으로 구성했으며, 이후 본선 실차에서는 CNN 경로 생성으로 확장했습니다. [45초 미리보기·개발 단계 보기](docs/demo.md)*
 
 | 항목 | 내용 |
 |---|---|
 | 기간 | 2026.05–2026.08 · 본선 2026.08.25 |
-| 대회 결과 | 예선 130팀 → 본선 22팀 진출 → **최종 8위**, 전체 코스 완주 |
+| 대회 결과 | 전체 참가 114팀 · 본선 22팀 진출 · **최종 8위**, 전체 코스 완주 |
 | 실행 환경 | Ryzen 7 5700U CPU 차량 PC · 카메라 · LiDAR · VESC |
 | 주요 기술 | Python · ROS 2 / ROS 1 연동 · OpenCV · YOLO · PyTorch · OpenVINO |
 | 본선 기준 | V7 · 팀 원본 커밋 `467f6dd` |
@@ -68,15 +80,15 @@
 | YOLO 실행 방식 비교 | p50 **91.76 → 51.03 ms** | 같은 녹화 프레임의 PyTorch / OpenVINO 비교 |
 | 경로 발행률 | **11.948 Hz** | 2026-08-21, 뷰어·브리지를 제외한 계측 조건 |
 
-예선 130팀 중 본선 22팀에 진출했으며, **전체 코스를 완주하고 최종 8위**를 기록했습니다. 모델 평가와 처리율 측정 조건은 [성능과 설계 상세](docs/technical-notes.md)에 정리했습니다.
+전체 참가 114팀 중 본선 22팀에 진출했으며, **전체 코스를 완주하고 최종 8위**를 기록했습니다. 모델 평가와 처리율 측정 조건은 [성능과 설계 상세](docs/technical-notes.md)에 정리했습니다.
 
 ## 개발 단계
 
 | 단계 | 접근 방식 | 코드 |
 |---|---|---|
-| 예선 | YOLO 인식, 센서 융합, 2차곡선 피팅과 상태 머신, 다점 경로 추종 | [예선 코드](https://github.com/jounget5411-lab/2026-Legend-KHUSLA/tree/8036461664402a54821b0665a4434e961f9a2e76/예선/src/track_drive) |
+| 예선 | YOLO 인식, 센서 융합, 2차곡선 피팅과 상태 머신, 다점 경로 추종 | [예선 영상](docs/demo.md) · [예선 코드](https://github.com/jounget5411-lab/2026-Legend-KHUSLA/tree/8036461664402a54821b0665a4434e961f9a2e76/예선/src/track_drive) |
 | 실차 전환 | 카메라·BEV·조향 보정, 입력 정보 손실과 센서 분포 차이 분석 | [초기 실차 이식 코드](https://github.com/jounget5411-lab/2026-Legend-KHUSLA/tree/8036461664402a54821b0665a4434e961f9a2e76/보관/예선코드_차량이식) |
-| 본선 V7 | 상황별 CNN, 단순 경로 추종, 고정 조향 기반 추월, 실행 조건 고정 | [본선 코드](https://github.com/jounget5411-lab/2026-Legend-KHUSLA/tree/8036461664402a54821b0665a4434e961f9a2e76/본선/src/track_drive_cnn_gpt) |
+| 본선 V7 | 상황별 CNN, 단순 경로 추종, 고정 조향 기반 추월, 실행 조건 고정 | [실차 주행 영상](https://www.youtube.com/watch?v=CcfXS3UFL0A&t=15872s) · [본선 코드](https://github.com/jounget5411-lab/2026-Legend-KHUSLA/tree/8036461664402a54821b0665a4434e961f9a2e76/본선/src/track_drive_cnn_gpt) |
 
 ## 코드를 빠르게 살펴보려면
 
@@ -98,3 +110,5 @@
 ---
 
 [FPGA 드론 프로젝트](https://github.com/jounget5411-lab/fpga-drone-portfolio) · [HL FMA 2025 프로젝트](https://github.com/jounget5411-lab/hlfma-2025-portfolio)
+
+[음성·조명 제어](https://github.com/jounget5411-lab/embedded-voice-lighting-portfolio) · [음원 방향·수어 번역](https://github.com/jounget5411-lab/embedded-sensor-fusion-portfolio) · [침입 감지 시제품](https://github.com/jounget5411-lab/embedded-intrusion-detection-portfolio)
