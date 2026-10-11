@@ -4,13 +4,11 @@
 
 `Python` · `ROS 2 / ROS 1` · `OpenCV` · `YOLO` · `PyTorch` · `OpenVINO` · `VESC`
 
-## 시스템 흐름
-
-![본선 V7의 카메라·LiDAR 입력, BEV, CNN 경로 생성, 차량 제어 흐름](assets/system-flow.svg)
-
-예선은 **BEV의 노란 중앙선에 2차곡선을 맞추는 방식**이었습니다. 본선에서는 노란선·흰선·LiDAR를 3채널 BEV로 묶어 CNN으로 전방 28개 경로점을 생성했습니다. 아래 구현과 성능은 본선 V7 기준입니다.
-
 ## 주행 자료
+
+[![예선 시뮬레이션 주행의 7초 미리보기](assets/simulation-preview.gif)](media/simulation.mp4)
+
+예선 시뮬레이션의 약 7초 장면입니다. 본선 실차 영상과 전체 시뮬레이션은 아래 링크에서 볼 수 있습니다.
 
 | 단계 | 확인할 자료 |
 |---|---|
@@ -18,6 +16,12 @@
 | 예선 시뮬레이션 | [전체 주행 영상 · 약 3분 16초](media/simulation.mp4) · [첫 45초](media/simulation-preview.mp4) |
 
 [개발 단계와 영상 안내 →](docs/demo.md)
+
+## 시스템 흐름
+
+![본선 V7의 카메라·LiDAR 입력, BEV, CNN 경로 생성, 차량 제어 흐름](assets/system-flow.svg)
+
+예선은 **BEV의 노란 중앙선에 2차곡선을 맞추는 방식**이었습니다. 본선에서는 노란선·흰선·LiDAR를 3채널 BEV로 묶어 CNN으로 전방 28개 경로점을 생성했습니다. 아래 구현과 성능은 본선 V7 기준입니다.
 
 ## 핵심 구현
 
