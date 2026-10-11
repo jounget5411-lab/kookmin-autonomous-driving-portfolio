@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="344" viewBox="0 0 1080 344" role="img" aria-labelledby="title desc">
+  <title id="title">국민대 본선 V7 자율주행 시스템</title>
+  <desc id="desc">카메라의 차선 마스크와 LiDAR를 3채널 BEV로 결합한 뒤 CNN으로 경로를 생성하고, 제어 노드가 조향과 속도 명령을 발행한다. 추월은 고정 조향 시퀀스로 별도 처리한다.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#277c9c"/></marker>
+    <style>
+      text{font-family:"Noto Sans KR","Malgun Gothic",Arial,sans-serif;fill:#172b44}
+      .box{fill:#fff;stroke:#cad8e3;stroke-width:1.4}
+      .label{font-size:19px;font-weight:600}
+      .sub{font-size:15px;fill:#52687c}
+      .flow{fill:none;stroke:#277c9c;stroke-width:2;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect width="1080" height="344" rx="16" fill="#f7f9fc"/>
+  <text x="28" y="36" font-size="20" font-weight="600">본선 V7 · 인지에서 차량 명령까지</text>
+  <text x="28" y="61" class="sub">카메라·LiDAR 공통 표현 → 전방 경로 생성 → 차량 제어</text>
+  <rect class="box" x="24" y="99" width="154" height="66" rx="12"/>
+  <text x="101" y="126" text-anchor="middle" class="label">카메라</text>
+  <text x="101" y="149" text-anchor="middle" class="sub">YOLO 차선 마스크</text>
+  <rect class="box" x="24" y="187" width="154" height="66" rx="12"/>
+  <text x="101" y="214" text-anchor="middle" class="label">LiDAR</text>
+  <text x="101" y="237" text-anchor="middle" class="sub">장애물 점유</text>
+  <path class="flow" d="M178 132 H198 V160 H220"/>
+  <path class="flow" d="M178 220 H198 V188 H220"/>
+  <rect class="box" x="222" y="123" width="194" height="104" rx="12"/>
+  <text x="319" y="152" text-anchor="middle" class="label">3채널 BEV</text>
+  <text x="319" y="176" text-anchor="middle" class="sub">노란선 · 흰선 · LiDAR</text>
+  <text x="319" y="200" text-anchor="middle" class="sub">3 × 128 × 120</text>
+  <path class="flow" d="M416 175 H458"/>
+  <rect class="box" x="460" y="123" width="182" height="104" rx="12"/>
+  <text x="551" y="152" text-anchor="middle" class="label">CNN 경로 생성</text>
+  <text x="551" y="176" text-anchor="middle" class="sub">상황별 모델 1개</text>
+  <text x="551" y="200" text-anchor="middle" class="sub">전방 28개 경로점</text>
+  <path class="flow" d="M642 175 H684"/>
+  <rect class="box" x="686" y="123" width="170" height="104" rx="12"/>
+  <text x="771" y="152" text-anchor="middle" class="label">조향·속도 제어</text>
+  <text x="771" y="176" text-anchor="middle" class="sub">경로 추종 · 가감속</text>
+  <text x="771" y="200" text-anchor="middle" class="sub">20 Hz 설정</text>
+  <path class="flow" d="M856 175 H898"/>
+  <rect x="900" y="123" width="156" height="104" rx="12" fill="#edf7f3" stroke="#8bb7a8" stroke-width="1.4"/>
+  <text x="978" y="153" text-anchor="middle" class="label">차량 명령</text>
+  <text x="978" y="178" text-anchor="middle" class="sub">ROS 모터 연동</text>
+  <text x="978" y="202" text-anchor="middle" class="sub">VESC · 조향</text>
+  <line x1="28" y1="280" x2="1052" y2="280" stroke="#d9e4ec"/>
+  <text x="28" y="308" font-size="15" fill="#24856e">추월: LiDAR 방향 판단 → 고정 조향 시퀀스 · 경로 추종과 배타적으로 실행</text>
+  <text x="28" y="331" font-size="13" fill="#52687c">예선의 2차곡선 피팅과 본선 CNN 경로 생성을 구분한 구성입니다.</text>
+</svg>
